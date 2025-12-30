@@ -882,12 +882,21 @@
             }, 2000);
         }
 
-        function checkout() {
-            if (Object.keys(cart).length === 0) {
+          function checkout() {
+            const items = Object.values(cart);
+            if (items.length === 0) {
                 alert('Your cart is empty!');
                 return;
             }
-            alert('Thank you for your purchase! 🎊\n\nThis is where you would integrate with your DS backend:\n- Linked List for cart management\n- Hash Table for product lookup');
+
+            const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const totalStr = total.toFixed(2);
+
+            const proceed = confirm(`Your total is $${totalStr}.\n\nProceed to checkout?`);
+            if (!proceed) return;
+
+            alert(`Thank you for your purchase! 🎊\n\nTotal amount: $${totalStr}\n\nThis is where you would integrate with your DS backend:\n- Linked List for cart management\n- Hash Table for product lookup`);
+
             cart = {};
             renderCart();
             updateCartBadge();
@@ -936,4 +945,5 @@
         renderProducts();
     </script>
 </body>
+
 </html>
